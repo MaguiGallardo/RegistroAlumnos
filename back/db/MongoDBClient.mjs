@@ -49,7 +49,15 @@ export class MongoDBClient {
         return await this.database.collection(collectionName).aggregate(pipeline).toArray();
     }
 
-    async getManyFrom(collectionName, match, limit = 20, aggStages = []) {
+    async getManyFrom(collectionName, limit = 20) {
+        const pipeline = [
+            { $limit: limit }
+        ];
+
+        return await this.getAggregate(collectionName, pipeline);
+    }
+
+    async getManyFromMatch(collectionName, match, limit = 20, aggStages = []) {
         const pipeline = [
             { $match: match },
             { $limit: limit },

@@ -4,14 +4,30 @@ import { Student } from '../models/models.mjs';
 import express from 'express';
 const router = express.Router();
 
-router.get("/", getStudent);
-export async function getStudent(req, res, next) {
-    const studentId = req.body.id;
+router.get("/all", getAllStudents);
+router.get("/all/:limit", getAllStudents);
+export async function getAllStudents(req, res, next) {
+    const limit = parseInt(req.params.limit) || undefined;
 
-    const student = await studentsService.getStudent(studentId);
-    console.log(student);
-    if (!student.isValid())
+    const students = await studentsService.getAllStudents(limit);
+
+    if (!students)
+        return res.status(409).json({ message: "An error occurred while getting students." });
+
+    res.status(200).send(JSON.stringify(students));
+}
+
+router.get("/:id", getStudentById);
+export async function getStudentById(req, res, next) {
+    const studentId = req.params.id;
+
+    const student = await studentsService.getStudentById(studentId);
+
+    if (!student)
         return res.status(409).json({ message: "An error occurred while getting the student." });
+
+    if (!student.isValid())
+        return res.status(404).json({ message: `Student with id '${studentId}' not found.` });
 
     res.status(200).send(JSON.stringify(student));
 }

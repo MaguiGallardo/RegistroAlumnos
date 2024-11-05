@@ -4,14 +4,29 @@ import { Subject } from '../models/models.mjs';
 import express from 'express';
 const router = express.Router();
 
-router.get("/", getSubject);
-export async function getSubject(req, res, next) {
-    const subjectId = req.body.id;
+router.get("/all", getAllSubjects);
+router.get("/all/:limit", getAllSubjects);
+export async function getAllSubjects(req, res, next) {
+    const limit = parseInt(req.params.limit) || undefined;
 
-    const subject = await subjectsService.getSubject(subjectId);
-    console.log(subject);
-    if (!subject.isValid())
+    const subjects = await subjectsService.getAllSubjects(limit);
+
+    if (!subjects)
+        return res.status(409).json({ message: "An error occurred while getting subjects." });
+
+    res.status(200).send(JSON.stringify(subjects));
+}
+
+router.get("/:id", getSubject);
+export async function getSubject(req, res, next) {
+    const subjectId = req.params.id;
+
+    const subject = await subjectsService.getSubjectById(subjectId);
+    if (!subject)
         return res.status(409).json({ message: "An error occurred while getting the subject." });
+
+    if (!subject.isValid())
+        return res.status(404).json({ message: `Subject with id '${subjectId}' not found.` });
 
     res.status(200).send(JSON.stringify(subject));
 }

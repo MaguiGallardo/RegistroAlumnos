@@ -1,5 +1,4 @@
 Todo:
-- Get all para alumnos y materias con limite
 - Asignar materias a un alumno
 - Obtener materias de un alumno con limite
 - Search de materias 
@@ -7,4 +6,4 @@ Todo:
 - Hacer un cliente o clase con todos los fetchs
 
 Done:
-- 
+- Get all para alumnos y materias con limite

@@ -4,7 +4,12 @@ import { Subject } from '../models/models.mjs';
 export class SubjectsService {
     collectionName = 'Subjects';
 
-    async getSubject(id) {
+    async getAllSubjects(limit = 50) {
+        var results = await dbClient.getManyFrom(this.collectionName, limit > 0 ? limit : 50);
+        return results.map(r => new Subject(r));
+    }
+
+    async getSubjectById(id) {
         var result = await dbClient.findOneIDFrom(this.collectionName, id);
 
         return result._id

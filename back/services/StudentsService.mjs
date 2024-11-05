@@ -4,7 +4,12 @@ import { Student } from '../models/models.mjs';
 export class StudentsService {
     collectionName = 'Students';
 
-    async getStudent(id) {
+    async getAllStudents(limit = 50) {
+        var results = await dbClient.getManyFrom(this.collectionName, limit > 0 ? limit : 50);
+        return results.map(r => new Student(r));
+    }
+
+    async getStudentById(id) {
         var result = await dbClient.findOneIDFrom(this.collectionName, id);
 
         return result._id
