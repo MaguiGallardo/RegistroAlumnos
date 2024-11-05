@@ -2,7 +2,8 @@ import express from 'express';
 import morgan from 'morgan';
 
 // Controllers
-import { router as studentsRouter } from './controllers/StudentController.mjs';
+import { router as studentsRouter } from './controllers/studentController.mjs';
+import { router as subjectRouter } from './controllers/subjectController.mjs';
 
 const app = express();
 const port = 3000;
@@ -12,6 +13,7 @@ app.use(morgan('dev'));
 
 // Map controllers route
 app.use('/students', studentsRouter);
+app.use('/subjects', subjectRouter);
 
 // server status
 app.get('/health', async (req, res, next) => res.sendStatus(200));

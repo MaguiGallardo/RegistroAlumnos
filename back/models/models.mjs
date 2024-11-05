@@ -27,6 +27,8 @@ export class Subject {
 
     title = '';
 
+    static invalidSubject = new Subject();
+
     constructor(data = null) {
         if (data)
             this.updateProperties(data);
