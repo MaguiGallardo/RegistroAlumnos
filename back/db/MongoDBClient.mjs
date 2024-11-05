@@ -143,8 +143,8 @@ export class MongoDBClient {
         return await collection.updateOne(filter, { $set: jsonObj });
     }
 
-    async updateOneID(collectionName, objID, jsonObj) {
-        return await this.updateOne(collectionName, { _id: objID }, jsonObj);
+    async updateOneID(collectionName, jsonObj, objID) {
+        return await this.updateOne(collectionName, { _id: objID || jsonObj._id }, jsonObj);
     }
 
 }

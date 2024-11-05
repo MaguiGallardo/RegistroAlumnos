@@ -19,6 +19,19 @@ export class StudentsService {
             ? new Student({ ...student, _id: result.insertedId })
             : Student.invalidStudent;
     }
+
+    async deleteStudent(id) {
+        var result = await dbClient.deleteOneID(this.collectionName, id);
+        return result.acknowledged && result.deletedCount > 0;
+    }
+
+    async updateStudent(student) {
+        var result = await dbClient.updateOneID(this.collectionName, student);
+
+        return result.acknowledged && result.matchedCount > 0
+            ? new Student(student)
+            : Student.invalidStudent;
+    }
 }
 
 const studentsService = new StudentsService();
