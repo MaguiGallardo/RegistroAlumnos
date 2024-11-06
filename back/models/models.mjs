@@ -6,6 +6,10 @@ export class Student {
     fullname = '';
     age = 0;
 
+    // subjects
+    subjectsIds = [];        // ids
+    subjectsDetails = [];    // details
+
     static invalidStudent = new Student();
 
     constructor(data = null) {

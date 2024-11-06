@@ -17,6 +17,16 @@ export class SubjectsService {
             : Subject.invalidSubject;
     }
 
+    // ids: Array<string>
+    async getSubjectsByIds(ids) {
+        const pipeline = [
+            { $match: { "_id": { $in: dbClient.getObjectIdList(ids) } } },
+        ];
+        var results = await dbClient.getAggregate(this.collectionName, pipeline);
+
+        return results.map(subject => new Subject(subject));
+    }
+
     async createSubject(subject) {
         var result = await dbClient.insertOne(this.collectionName, subject);
 

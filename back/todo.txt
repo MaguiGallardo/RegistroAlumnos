@@ -1,9 +1,11 @@
 Todo:
 - Asignar materias a un alumno
-- Obtener materias de un alumno con limite
 - Search de materias 
 - Search de alumnos
 - Hacer un cliente o clase con todos los fetchs
+- Utilizar siempre 'id' y no '_id' en las request, (mapearlas quiza).
+- Mapear los modelos a un DTO de respuesta
 
 Done:
 - Get all para alumnos y materias con limite
+- Incluir materias del alumno en la resputa de 'get by id' y 'get all'

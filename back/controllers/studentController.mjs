@@ -54,9 +54,9 @@ export async function updateStudent(req, res, next) {
     res.status(200).send(JSON.stringify(updatedStudent));
 }
 
-router.delete("/", deleteStudent);
+router.delete("/:id", deleteStudent);
 export async function deleteStudent(req, res, next) {
-    const studentId = req.body.id;
+    const studentId = req.params.id;
 
     const deleted = await studentsService.deleteStudent(studentId);
     if (!deleted)

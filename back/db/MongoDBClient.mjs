@@ -41,8 +41,7 @@ export class MongoDBClient {
         if (objIDs == null || objIDs.length == 0)
             return [];
 
-        var ids = objIDs.map(objID => this.getObjectId(objID));
-        return ids;
+        return objIDs.map(objID => this.getObjectId(objID));
     }
 
     async getAggregate(collectionName, pipeline) {
