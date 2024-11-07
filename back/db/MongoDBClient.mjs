@@ -29,9 +29,11 @@ export class MongoDBClient {
     }
 
     getObjectId(objID) {
+        // already ObjectId
+        if (objID instanceof  ObjectId) return objID;
+
         // prevent wrong id
-        if (objID.length != 24)
-            return {};
+        if (objID.length != 24) return {};
 
         return new ObjectId(objID);
     }

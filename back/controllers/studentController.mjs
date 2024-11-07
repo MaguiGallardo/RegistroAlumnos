@@ -65,4 +65,27 @@ export async function deleteStudent(req, res, next) {
     res.sendStatus(200);
 }
 
+//region Student subjects
+router.put("/assign-subjects", assignSubjectsToStudent);
+export async function assignSubjectsToStudent(req, res, next) {
+    const { id: studentId, subjectsIds } = req.body;
+
+    const updatedStudent = await studentsService.assignSubjectsToStudent(studentId, subjectsIds);
+    if (!updatedStudent.isValid())
+        return res.status(409).json({ message: "An error occurred while updating the student." });
+
+    res.status(200).send(JSON.stringify(updatedStudent));
+}
+
+router.put("/remove-subjects", removeSubjectsFromStudent);
+export async function removeSubjectsFromStudent(req, res, next) {
+    const { id: studentId, subjectsIds } = req.body;
+
+    const updatedStudent = await studentsService.removeSubjectsFromStudent(studentId, subjectsIds);
+    if (!updatedStudent.isValid())
+        return res.status(409).json({ message: "An error occurred while updating the student." });
+
+    res.status(200).send(JSON.stringify(updatedStudent));
+}
+
 export { router };

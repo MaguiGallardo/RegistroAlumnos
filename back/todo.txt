@@ -1,5 +1,4 @@
 Todo:
-- Asignar materias a un alumno
 - Search de materias 
 - Search de alumnos
 - Hacer un cliente o clase con todos los fetchs
@@ -9,3 +8,4 @@ Todo:
 Done:
 - Get all para alumnos y materias con limite
 - Incluir materias del alumno en la resputa de 'get by id' y 'get all'
+- Asignar y eliminar materias de un alumno
