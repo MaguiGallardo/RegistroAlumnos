@@ -27,7 +27,7 @@ export class StudentResponse {
     static fromStudent(student) {
         return new StudentResponse({
             id: student._id,
-            subjects: student.subjectsDetails,
+            subjects: student.subjectsDetails.map(subject => SubjectResponse.fromSubject(subject)),
             ...student
         });
     }
