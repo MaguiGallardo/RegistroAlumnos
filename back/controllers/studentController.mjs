@@ -19,7 +19,7 @@ export async function getAllStudents(req, res, next) {
 
 router.get("/search", searchStudentsByName);
 export async function searchStudentsByName(req, res, next) {
-    // /search?q=value
+    // search?q=value
     const search = req.query.q;
 
     const students = await studentsService.searchStudentsByName(search);
