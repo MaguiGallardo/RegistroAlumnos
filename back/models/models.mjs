@@ -13,8 +13,10 @@ export class Student {
     static invalidStudent = new Student();
 
     constructor(data = null) {
-        if (data)
+        if (data) {
+            this._id = data.id; // support to use id as _id 
             this.updateProperties(data);
+        }
     }
     updateProperties(data) {
         for (let key in this) {
@@ -34,8 +36,10 @@ export class Subject {
     static invalidSubject = new Subject();
 
     constructor(data = null) {
-        if (data)
+        if (data) {
+            this._id = data.id; // support to use id as _id 
             this.updateProperties(data);
+        }
     }
     updateProperties(data) {
         for (let key in this) {

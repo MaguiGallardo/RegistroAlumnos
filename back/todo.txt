@@ -1,5 +1,4 @@
 Todo:
-- Utilizar siempre 'id' y no '_id' en las request, (mapearlas quiza).
 - Hacer un cliente o clase con todos los fetchs
 - Actualizar unicamente los valores que están en el body del request de update (PUT)
 
@@ -10,3 +9,4 @@ Done:
 - Search de alumnos
 - Search de materias 
 - Mapear los modelos a un DTO de respuesta
+- Utilizar siempre 'id' y no '_id' en las request, (mapearlas quiza).
