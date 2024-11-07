@@ -67,7 +67,15 @@ export async function createStudent(req, res, next) {
 
 router.put("/", updateStudent);
 export async function updateStudent(req, res, next) {
-    const student = new Student(req.body);
+    const studentReq = req.body;
+
+    // get original
+    const student = await studentsService.getStudentById(studentReq.id);
+    if (!student)
+        return res.status(404).json({ message: "Student not found" });
+
+    // update only keys in request
+    student.updateProperties(studentReq);
 
     const updatedStudent = await studentsService.updateStudent(student);
     if (!updatedStudent.isValid())

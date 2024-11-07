@@ -66,7 +66,15 @@ export async function createSubject(req, res, next) {
 
 router.put("/", updateSubject);
 export async function updateSubject(req, res, next) {
-    const subject = new Subject(req.body);
+    const subjectReq = req.body;
+
+    // get original
+    const subject = await subjectsService.getSubjectById(subjectReq.id);
+    if (!subject)
+        return res.status(404).json({ message: "Subject not found" });
+
+    // update only keys in request
+    subject.updateProperties(subjectReq);
 
     const updatedSubject = await subjectsService.updateSubject(subject);
     if (!updatedSubject.isValid())

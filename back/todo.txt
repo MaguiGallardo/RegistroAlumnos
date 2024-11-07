@@ -1,6 +1,7 @@
 Todo:
 - Hacer un cliente o clase con todos los fetchs
-- Actualizar unicamente los valores que están en el body del request de update (PUT)
+- Forzar el tipo de los fields en las request,
+    ya que podrian ingresar un objeto o cualquier cosa en metodos como create y update.
 
 Done:
 - Get all para alumnos y materias con limite
@@ -10,3 +11,4 @@ Done:
 - Search de materias 
 - Mapear los modelos a un DTO de respuesta
 - Utilizar siempre 'id' y no '_id' en las request, (mapearlas quiza).
+- Actualizar unicamente los valores que están en el body del request de update (PUT)
