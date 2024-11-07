@@ -27,6 +27,24 @@ export class SubjectsService {
         return results.map(subject => new Subject(subject));
     }
 
+    async searchSubjectsByName(title, limit = 50) {
+        // query
+        const pipeline = [
+            {
+                $match: {
+                    title: { $regex: title, $options: 'i' }, // 'i' option means case in-sensitive
+                }
+            },
+            { $limit: limit },
+        ];
+
+        // search
+        var subjectsResult = await dbClient.getAggregate(this.collectionName, pipeline);
+
+        // map to subject
+        return subjectsResult.map(subject => new Subject(subject));
+    }
+
     async createSubject(subject) {
         var result = await dbClient.insertOne(this.collectionName, subject);
 

@@ -17,6 +17,19 @@ export async function getAllSubjects(req, res, next) {
     res.status(200).send(JSON.stringify(subjects));
 }
 
+router.get("/search", searchSubjectsByName);
+export async function searchSubjectsByName(req, res, next) {
+    // search?q=value
+    const search = req.query.q;
+
+    const subjects = await subjectsService.searchSubjectsByName(search);
+
+    if (!subjects)
+        return res.status(409).json({ message: "An error occurred while getting subjects." });
+
+    res.status(200).send(JSON.stringify(subjects));
+}
+
 router.get("/:id", getSubject);
 export async function getSubject(req, res, next) {
     const subjectId = req.params.id;
