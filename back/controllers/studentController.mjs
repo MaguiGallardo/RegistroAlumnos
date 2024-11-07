@@ -17,6 +17,19 @@ export async function getAllStudents(req, res, next) {
     res.status(200).send(JSON.stringify(students));
 }
 
+router.get("/search", searchStudentsByName);
+export async function searchStudentsByName(req, res, next) {
+    // /search?q=value
+    const search = req.query.q;
+
+    const students = await studentsService.searchStudentsByName(search);
+
+    if (!students)
+        return res.status(409).json({ message: "An error occurred while getting students." });
+
+    res.status(200).send(JSON.stringify(students));
+}
+
 router.get("/:id", getStudentById);
 export async function getStudentById(req, res, next) {
     const studentId = req.params.id;

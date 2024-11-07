@@ -29,6 +29,26 @@ export class StudentsService {
         return new Student(studentResult);
     }
 
+
+    async searchStudentsByName(fullname, limit = 50) {
+        // query
+        const pipeline = [
+            {
+                $match: {
+                    fullname: { $regex: fullname, $options: 'i' }, // 'i' option means case in-sensitive
+                }
+            },
+            { $limit: limit },
+        ];
+
+        // search
+        var studentsResult = await dbClient.getAggregate(this.collectionName, pipeline);
+
+        // add subjects details
+        const students = await this.populateStudentsSubjectsDetails(studentsResult);
+        return students;
+    }
+
     // fetch subjects details from students
     async populateStudentsSubjectsDetails(students) {
         // Group subject IDs in single array

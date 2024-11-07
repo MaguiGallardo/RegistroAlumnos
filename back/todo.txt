@@ -1,6 +1,5 @@
 Todo:
 - Search de materias 
-- Search de alumnos
 - Utilizar siempre 'id' y no '_id' en las request, (mapearlas quiza).
 - Mapear los modelos a un DTO de respuesta
 - Hacer un cliente o clase con todos los fetchs
@@ -9,3 +8,4 @@ Done:
 - Get all para alumnos y materias con limite
 - Incluir materias del alumno en la resputa de 'get by id' y 'get all'
 - Asignar y eliminar materias de un alumno
+- Search de alumnos
