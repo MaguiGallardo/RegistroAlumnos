@@ -2,6 +2,7 @@ Todo:
 - Hacer un cliente o clase con todos los fetchs
 - Forzar el tipo de los fields en las request,
     ya que podrian ingresar un objeto o cualquier cosa en metodos como create y update.
+- Implementar nuevas comprobaciones con throws en servicios y manejar try catchs en controladores.
 
 Done:
 - Get all para alumnos y materias con limite
