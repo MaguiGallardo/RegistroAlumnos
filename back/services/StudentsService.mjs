@@ -6,24 +6,10 @@ export class StudentsService {
     collectionName = 'Students';
 
     async getAllStudents(limit = 50) {
-        const results = await dbClient.getManyFrom(this.collectionName, limit > 0 ? limit : 50);
+        const studentsResult = await dbClient.getManyFrom(this.collectionName, limit > 0 ? limit : 50);
 
-        // Group subject IDs in single array
-        const allSubjectsIds = results.flatMap(student => student.subjectsIds);
-        // Fetch subject details in one query
-        const subjectsResult = await subjectsService.getSubjectsByIds(allSubjectsIds);
-
-        // Map students and add subject details
-        const students = results.map(studentResult => {
-            // Match subjects to student subjectsIds
-            const studentSubjectsDetails = studentResult.subjectsIds.map(subjectId =>
-                subjectsResult.find(subject => subject._id.toString() === subjectId.toString())
-            );
-
-            studentResult.subjectsDetails = studentSubjectsDetails;
-            return new Student(studentResult);
-        });
-
+        // add subjects details
+        const students = await this.populateStudentsSubjectsDetails(studentsResult);
         return students;
     }
 
@@ -41,6 +27,26 @@ export class StudentsService {
         studentResult.subjectsDetails = subjectsResult;
 
         return new Student(studentResult);
+    }
+
+    // fetch subjects details from students
+    async populateStudentsSubjectsDetails(students) {
+        // Group subject IDs in single array
+        const allSubjectsIds = students.flatMap(student => student.subjectsIds);
+        // Fetch subject details in one query
+        const subjectsResult = await subjectsService.getSubjectsByIds(allSubjectsIds);
+
+        // add subjects details to every student
+        const studentsWithSubjects = students.map(student => {
+            // Match subjects to student subjectsIds
+            const studentSubjectsDetails = student.subjectsIds.map(subjectId =>
+                subjectsResult.find(subject => subject._id.toString() === subjectId.toString())
+            );
+
+            return new Student({ ...student, subjectsDetails: studentSubjectsDetails });
+        });
+
+        return studentsWithSubjects;
     }
 
     async createStudent(student) {
@@ -70,7 +76,9 @@ export class StudentsService {
             : Student.invalidStudent;
     }
 
-    //region Assign subjects
+    //region Subjects
+
+    // Assign subjects
     async assignSubjectsToStudent(studentId, subjectsIds) {
         if (!Array.isArray(subjectsIds)) throw new Error("subjectsIds must be an array");
 
@@ -99,6 +107,7 @@ export class StudentsService {
         return await this.getStudentById(studentId);
     }
 
+    // Remove subjects
     async removeSubjectsFromStudent(studentId, subjectsIds) {
         if (!Array.isArray(subjectsIds)) throw new Error("subjectsIds must be an array");
 
