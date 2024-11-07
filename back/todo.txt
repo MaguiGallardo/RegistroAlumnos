@@ -1,7 +1,7 @@
 Todo:
 - Utilizar siempre 'id' y no '_id' en las request, (mapearlas quiza).
-- Mapear los modelos a un DTO de respuesta
 - Hacer un cliente o clase con todos los fetchs
+- Actualizar unicamente los valores que están en el body del request de update (PUT)
 
 Done:
 - Get all para alumnos y materias con limite
@@ -9,3 +9,4 @@ Done:
 - Asignar y eliminar materias de un alumno
 - Search de alumnos
 - Search de materias 
+- Mapear los modelos a un DTO de respuesta

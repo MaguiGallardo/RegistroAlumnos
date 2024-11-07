@@ -1,5 +1,6 @@
 import subjectsService from '../services/SubjectsService.mjs';
 import { Subject } from '../models/models.mjs';
+import { SubjectResponse } from '../models/DTOs.mjs';
 
 import express from 'express';
 const router = express.Router();
@@ -14,7 +15,9 @@ export async function getAllSubjects(req, res, next) {
     if (!subjects)
         return res.status(409).json({ message: "An error occurred while getting subjects." });
 
-    res.status(200).send(JSON.stringify(subjects));
+    // map to DTO
+    const subjectsRes = subjects.map(s => SubjectResponse.fromSubject(s));
+    res.status(200).send(JSON.stringify(subjectsRes));
 }
 
 router.get("/search", searchSubjectsByName);
@@ -27,7 +30,9 @@ export async function searchSubjectsByName(req, res, next) {
     if (!subjects)
         return res.status(409).json({ message: "An error occurred while getting subjects." });
 
-    res.status(200).send(JSON.stringify(subjects));
+    // map to DTO
+    const subjectsRes = subjects.map(s => SubjectResponse.fromSubject(s));
+    res.status(200).send(JSON.stringify(subjectsRes));
 }
 
 router.get("/:id", getSubject);
@@ -41,7 +46,9 @@ export async function getSubject(req, res, next) {
     if (!subject.isValid())
         return res.status(404).json({ message: `Subject with id '${subjectId}' not found.` });
 
-    res.status(200).send(JSON.stringify(subject));
+    // map to DTO
+    const subjectRes = SubjectResponse.fromSubject(subject);
+    res.status(200).send(JSON.stringify(subjectRes));
 }
 
 router.post("/", createSubject);
@@ -52,7 +59,9 @@ export async function createSubject(req, res, next) {
     if (!createdSubject.isValid())
         return res.status(409).json({ message: "An error occurred while creating the subject." });
 
-    res.status(200).send(JSON.stringify(createdSubject));
+    // map to DTO
+    const subjectRes = SubjectResponse.fromSubject(createdSubject);
+    res.status(200).send(JSON.stringify(subjectRes));
 }
 
 router.put("/", updateSubject);
@@ -63,12 +72,14 @@ export async function updateSubject(req, res, next) {
     if (!updatedSubject.isValid())
         return res.status(409).json({ message: "An error occurred while updating the subject." });
 
-    res.status(200).send(JSON.stringify(updatedSubject));
+    // map to DTO
+    const subjectRes = SubjectResponse.fromSubject(updatedSubject);
+    res.status(200).send(JSON.stringify(subjectRes));
 }
 
-router.delete("/", deleteSubject);
+router.delete("/:id", deleteSubject);
 export async function deleteSubject(req, res, next) {
-    const subjectId = req.body.id;
+    const subjectId = req.params.id;
 
     const deleted = await subjectsService.deleteSubject(subjectId);
     if (!deleted)

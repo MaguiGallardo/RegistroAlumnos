@@ -1,5 +1,6 @@
 import studentsService from '../services/StudentsService.mjs';
 import { Student } from '../models/models.mjs';
+import { StudentResponse } from '../models/DTOs.mjs';
 
 import express from 'express';
 const router = express.Router();
@@ -14,7 +15,9 @@ export async function getAllStudents(req, res, next) {
     if (!students)
         return res.status(409).json({ message: "An error occurred while getting students." });
 
-    res.status(200).send(JSON.stringify(students));
+    // map to DTO
+    const studentsRes = students.map(s => StudentResponse.fromStudent(s));
+    res.status(200).send(JSON.stringify(studentsRes));
 }
 
 router.get("/search", searchStudentsByName);
@@ -27,7 +30,9 @@ export async function searchStudentsByName(req, res, next) {
     if (!students)
         return res.status(409).json({ message: "An error occurred while getting students." });
 
-    res.status(200).send(JSON.stringify(students));
+    // map to DTO
+    const studentsRes = students.map(s => StudentResponse.fromStudent(s));
+    res.status(200).send(JSON.stringify(studentsRes));
 }
 
 router.get("/:id", getStudentById);
@@ -42,7 +47,9 @@ export async function getStudentById(req, res, next) {
     if (!student.isValid())
         return res.status(404).json({ message: `Student with id '${studentId}' not found.` });
 
-    res.status(200).send(JSON.stringify(student));
+    // map to DTO
+    const studentRes = StudentResponse.fromStudent(student);
+    res.status(200).send(JSON.stringify(studentRes));
 }
 
 router.post("/", createStudent);
@@ -53,7 +60,9 @@ export async function createStudent(req, res, next) {
     if (!createdStudent.isValid())
         return res.status(409).json({ message: "An error occurred while creating the student." });
 
-    res.status(200).send(JSON.stringify(createdStudent));
+    // map to DTO
+    const studentRes = StudentResponse.fromStudent(createdStudent);
+    res.status(200).send(JSON.stringify(studentRes));
 }
 
 router.put("/", updateStudent);
@@ -64,7 +73,9 @@ export async function updateStudent(req, res, next) {
     if (!updatedStudent.isValid())
         return res.status(409).json({ message: "An error occurred while updating the student." });
 
-    res.status(200).send(JSON.stringify(updatedStudent));
+    // map to DTO
+    const studentRes = StudentResponse.fromStudent(updatedStudent);
+    res.status(200).send(JSON.stringify(studentRes));
 }
 
 router.delete("/:id", deleteStudent);
@@ -87,7 +98,9 @@ export async function assignSubjectsToStudent(req, res, next) {
     if (!updatedStudent.isValid())
         return res.status(409).json({ message: "An error occurred while updating the student." });
 
-    res.status(200).send(JSON.stringify(updatedStudent));
+    // map to DTO
+    const studentRes = StudentResponse.fromStudent(updatedStudent);
+    res.status(200).send(JSON.stringify(studentRes));
 }
 
 router.put("/remove-subjects", removeSubjectsFromStudent);
@@ -98,7 +111,9 @@ export async function removeSubjectsFromStudent(req, res, next) {
     if (!updatedStudent.isValid())
         return res.status(409).json({ message: "An error occurred while updating the student." });
 
-    res.status(200).send(JSON.stringify(updatedStudent));
+    // map to DTO
+    const studentRes = StudentResponse.fromStudent(updatedStudent);
+    res.status(200).send(JSON.stringify(studentRes));
 }
 
 export { router };
