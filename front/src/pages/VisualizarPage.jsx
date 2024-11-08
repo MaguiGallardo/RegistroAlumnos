@@ -1,3 +1,5 @@
+import './Visualizarpage.css';
+
 function VisualizarPage() {
     const listAlumnos = [{
         nombre: "Pedro",

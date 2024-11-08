@@ -4,12 +4,14 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import InscripcionAlumnoPage from './pages/InscripcionAlumnoPage'
 import VisualizarPage from './pages/VisualizarPage'
+import AsignarMateriaPage from './pages/AsignarMateriaPage'
 
 function App() {
   
 
   return (
-  <VisualizarPage></VisualizarPage>
+  <InscripcionAlumnoPage></InscripcionAlumnoPage>
+  
 
      
   )

@@ -1,6 +1,9 @@
+import './InscripcionAlumno.css';
+
+
 function InscripcionAlumnoPage() {
     return (
-        <div>
+        <form>
             <span>Ingrese su Nombre y apellido</span>
             <input type="text" />
 
@@ -8,7 +11,7 @@ function InscripcionAlumnoPage() {
             <input type="number" />
 
             <button>Registrarse</button>
-        </div>
+        </form>
 
 
 
