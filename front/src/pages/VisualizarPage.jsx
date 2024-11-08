@@ -5,7 +5,7 @@ function VisualizarPage() {
     const navigate = useNavigate();
 
     const handleRegisterClick = () => {
-        navigate('/');  // Redirige a la página de Inscripción de Alumnos
+        navigate('/registro');  // Redirige a la página de Inscripción de Alumnos
     };
 
 

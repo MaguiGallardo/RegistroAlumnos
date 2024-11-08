@@ -1,10 +1,10 @@
 import './InscripcionAlumno.css';
+import { Link } from 'react-router-dom';
 
 function InscripcionAlumnoPage() {
     return (
-        <div 
-        
-        className="inscripcion-container">
+        <div className="inscripcion-container">
+            <Link to='/'>Ir a home</Link> 
             <h2>Registro de Alumno</h2>
             <form>
                 <span>Ingrese su Nombre y apellido</span>
@@ -15,6 +15,7 @@ function InscripcionAlumnoPage() {
 
                 <button className="registrarse-btn">Registrarse</button>
             </form>
+            
         </div>
     );
 }

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './AsignarMateria.css';
 
 
-function PerfilAlumnoPage() {
+function AsignarMateriaPage() {
     const [modoEdicion, setModoEdicion] = useState(false);
     const [nombre, setNombre] = useState('');
     const [edad, setEdad] = useState('');
