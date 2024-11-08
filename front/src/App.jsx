@@ -1,20 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import InscripcionAlumnoPage from './pages/InscripcionAlumnoPage'
-import VisualizarPage from './pages/VisualizarPage'
-import AsignarMateriaPage from './pages/AsignarMateriaPage'
+import InscripcionAlumnoPage from './pages/InscripcionAlumnoPage';
+import VisualizarPage from './pages/VisualizarPage';
+import AsignarMateriaPage from './pages/AsignarMateriaPage';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+
 
 function App() {
-  
-
   return (
-  <InscripcionAlumnoPage></InscripcionAlumnoPage>
-  
-
-     
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<h4>Home</h4>} />
+        <Route path="/home" element={<VisualizarPage />} />
+        <Route path="/registro" element={<InscripcionAlumnoPage />} />
+        <Route path="/materias" element={<AsignarMateriaPage />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
+

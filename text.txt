@@ -1,3 +1,123 @@
+App.jsx:
+
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import InscripcionAlumnoPage from './pages/InscripcionAlumnoPage'
+import VisualizarPage from './pages/VisualizarPage'
+import AsignarMateriaPage from './pages/AsignarMateriaPage'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom'
+
+function App() {
+
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<h4>Home</h4>} />
+        <Route path="/home" element={<VisualizarPage />} />
+        <Route path="/registro" element={<InscripcionAlumnoPage />} />
+        <Route path="/materias" element={<AsignarMateriaPage />} />
+
+
+      </Routes>
+
+
+
+    </Router>
+
+
+
+  )
+}
+
+export default App
+
+
+Main.jsx
+
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+import { HashRouter } from 'react-router-dom';
+
+createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+  <HashRouter> 
+    <App />
+  </HashRouter>
+</React.StrictMode>
+);
+
+
+Pages:
+
+/* VisualizarPage.css */
+
+.visualizacion-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #e3e8f7;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.visualizacion-container h2 {
+    color: #5a67d8;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.visualizacion-container ul {
+    list-style-type: none;
+    padding: 0;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.visualizacion-container li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.visualizacion-container li:last-child {
+    border-bottom: none;
+}
+
+
+
+import './InscripcionAlumno.css';
+
+
+function InscripcionAlumnoPage() {
+    return (
+        <form>
+            <span>Ingrese su Nombre y apellido</span>
+            <input type="text" />
+
+            <span>Ingrese su Edad</span>
+            <input type="number" />
+
+            <button>Registrarse</button>
+        </form>
+
+
+
+    );
+
+}
+
+export default InscripcionAlumnoPage;
+
+
+
+
 import React, { useState } from 'react';
 import './AsignarMateria.css';
 
@@ -35,8 +155,8 @@ function PerfilAlumnoPage() {
     };
 
     return (
-        <div className="perfil-container">
-            <h2>Asignar Materia</h2>
+        <div>
+            <h2>Perfil del Alumno</h2>
 
             {modoEdicion ? (
                 <form>
@@ -105,4 +225,8 @@ function PerfilAlumnoPage() {
     );
 }
 
-export default AsignarMateriaPage;
+export default PerfilAlumnoPage;
+
+
+
+

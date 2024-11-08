@@ -1,6 +1,14 @@
-import './Visualizarpage.css';
+import './VisualizarPage.css';
+import { useNavigate } from 'react-router-dom';
 
 function VisualizarPage() {
+    const navigate = useNavigate();
+
+    const handleRegisterClick = () => {
+        navigate('/');  // Redirige a la página de Inscripción de Alumnos
+    };
+
+
     const listAlumnos = [{
         nombre: "Pedro",
         edad: 21,
@@ -9,12 +17,15 @@ function VisualizarPage() {
     {
         nombre: "magui",
         edad: 20,
-        materias: ["gfjghh"]
+        materias: ["Lengua"]
     }
-];
+    ];
     return (
-        < ul >
-            {listAlumnos.map(alumno => {
+        <div>
+            <h2>Lista de Alumnos</h2>
+            < ul >
+                <h1>Alumnos Inscriptos</h1>
+                {listAlumnos.map(alumno => {
                     return (
 
                         <li>
@@ -24,8 +35,13 @@ function VisualizarPage() {
                         </li>
                     );
                 })
-            }
-        </ul >
+                }
+
+                <button onClick={handleRegisterClick} className="register-button">
+                    Registrar Nuevo Alumno
+                </button>
+            </ul >
+        </div>
     );
 
 }
