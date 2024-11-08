@@ -1,6 +1,6 @@
 import subjectsService from '../services/SubjectsService.mjs';
 import { Subject } from '../models/models.mjs';
-import { SubjectResponse } from '../models/DTOs.mjs';
+import { SubjectResponse } from '../ApiClient/ResponseModels.mjs';
 
 import express from 'express';
 const router = express.Router();
