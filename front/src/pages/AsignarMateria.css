@@ -1,0 +1,89 @@
+/* Asignarmateria.css */
+
+.perfil-container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.perfil-container h2 {
+    color: #5a67d8;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.perfil-container span {
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.perfil-container input[type="text"],
+.perfil-container input[type="number"],
+.perfil-container select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.perfil-container .checklist-materias {
+    background-color: #eef2ff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.perfil-container .checklist-materias li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.perfil-container .checklist-materias li:last-child {
+    border-bottom: none;
+}
+
+.perfil-container .guardar-btn {
+    width: 100%;
+    background-color: #5a67d8;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.perfil-container .guardar-btn:hover {
+    background-color: #434aa8;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    max-width: 300px;
+}
+
+.modal-content button {
+    width: 100%;
+    padding: 10px;
+}

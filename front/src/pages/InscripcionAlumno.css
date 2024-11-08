@@ -1,0 +1,47 @@
+/* InscripcionAlumno.css */
+
+.inscripcion-container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.inscripcion-container h2 {
+    color: #5a67d8;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.inscripcion-container span {
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.inscripcion-container input[type="text"],
+.inscripcion-container input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.inscripcion-container .registrarse-btn {
+    width: 100%;
+    background-color: #5a67d8;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.inscripcion-container .registrarse-btn:hover {
+    background-color: #434aa8;
+}
