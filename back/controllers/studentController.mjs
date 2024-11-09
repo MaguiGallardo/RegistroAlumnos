@@ -1,6 +1,6 @@
 import studentsService from '../services/StudentsService.mjs';
 import { Student } from '../models/models.mjs';
-import { StudentResponse } from '../ApiClient/ResponseModels.mjs';
+import { Student as StudentResponse } from '../ApiClient/models.mjs';
 
 import express from 'express';
 const router = express.Router();

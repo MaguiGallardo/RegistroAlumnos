@@ -1,6 +1,6 @@
 import subjectsService from '../services/SubjectsService.mjs';
 import { Subject } from '../models/models.mjs';
-import { SubjectResponse } from '../ApiClient/ResponseModels.mjs';
+import { Subject as SubjectResponse } from '../ApiClient/models.mjs';
 
 import express from 'express';
 const router = express.Router();
@@ -20,12 +20,12 @@ export async function getAllSubjects(req, res, next) {
     res.status(200).send(JSON.stringify(subjectsRes));
 }
 
-router.get("/search", searchSubjectsByName);
-export async function searchSubjectsByName(req, res, next) {
+router.get("/search", searchSubjectsByTitle);
+export async function searchSubjectsByTitle(req, res, next) {
     // search?q=value
     const search = req.query.q;
 
-    const subjects = await subjectsService.searchSubjectsByName(search);
+    const subjects = await subjectsService.searchSubjectsByTitle(search);
 
     if (!subjects)
         return res.status(409).json({ message: "An error occurred while getting subjects." });

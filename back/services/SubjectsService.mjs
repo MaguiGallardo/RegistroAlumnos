@@ -27,7 +27,7 @@ export class SubjectsService {
         return results.map(subject => new Subject(subject));
     }
 
-    async searchSubjectsByName(title, limit = 50) {
+    async searchSubjectsByTitle(title, limit = 50) {
         // query
         const pipeline = [
             {
