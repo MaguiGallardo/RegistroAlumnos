@@ -1,0 +1,43 @@
+/* Importa los estilos de Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos globales adicionales */
+
+/* Reestablece los márgenes y los rellenos de todos los elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Aplica un estilo global para el cuerpo */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f9fafb; /* Color de fondo claro */
+  color: #333; /* Color de texto */
+  line-height: 1.6; /* Espaciado entre líneas */
+}
+
+/* Estilo para el contenedor principal */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Agrega una sombra sutil en el contenedor */
+.container {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para enlaces */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  color: #007bff; /* Color azul para hover */
+}
