@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "firebase": "^11.0.1",
-    "json2csv": "^5.0.6",
+    "json2csv": "^6.0.0-alpha.2",
+    "papaparse": "^5.4.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "vite-plugin-node-polyfills": "^0.22.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

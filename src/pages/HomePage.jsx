@@ -1,13 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Importa el componente Link para navegación
-import { Parser } from 'json2csv'; // Importa la función Parser de json2csv
+import Papa from 'papaparse'; // Importa la función papaparse
 
 const HomePage = () => {
   // Función para exportar los alumnos a CSV
   const exportToCSV = (data) => {
     try {
-      const parser = new Parser();  // Crea una instancia del parser
-      const csv = parser.parse(data);  // Convierte los datos a CSV
+      const csv = Papa.unparse(data); // Convierte los datos a CSV
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
@@ -25,10 +24,10 @@ const HomePage = () => {
   ];
 
   return (
-    <div className="container mx-auto p-4 text-center">
+    <div className="flex flex-col justify-center items-center min-h-screen p-4 text-center">
       <h1 className="text-4xl font-bold mb-8">Bienvenido al Sistema de Gestión de Alumnos y Materias</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         {/* Enlace para ir a la página de alumnos */}
         <Link
           to="/alumnos"
@@ -44,15 +43,15 @@ const HomePage = () => {
         >
           Gestionar Materias
         </Link>
-
-        {/* Botón para exportar los alumnos a CSV */}
-        <button
-          onClick={() => exportToCSV(alumnos)} // Pasa los datos de alumnos
-          className="bg-yellow-600 text-white py-4 px-8 rounded-md hover:bg-yellow-700 mt-4"
-        >
-          Exportar Alumnos a CSV
-        </button>
       </div>
+
+      {/* Botón para exportar los alumnos a CSV */}
+      <button
+        onClick={() => exportToCSV(alumnos)} // Pasa los datos de alumnos
+        className="bg-yellow-600 text-white py-4 px-8 rounded-md hover:bg-yellow-700 mt-4"
+      >
+        Exportar Alumnos a CSV
+      </button>
     </div>
   );
 };
