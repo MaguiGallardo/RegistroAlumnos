@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { doc, getDoc, updateDoc, getDocs, collection } from "firebase/firestore";
+import { doc, getDoc, updateDoc, deleteDoc, getDocs, collection } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 
 const EditarAlumnoPage = () => {
@@ -8,26 +8,25 @@ const EditarAlumnoPage = () => {
   const navigate = useNavigate();
 
   const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState(""); 
+  const [dni, setDni] = useState("");
   const [edad, setEdad] = useState("");
   const [materiasSeleccionadas, setMateriasSeleccionadas] = useState([]);
   const [materiasDisponibles, setMateriasDisponibles] = useState([]);
-  const [materiasAsignadas, setMateriasAsignadas] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
-  // Obtener los datos del alumno y las materias disponibles
   const fetchData = async () => {
     try {
-      // Obtener los datos del alumno
       const alumnoDoc = await getDoc(doc(db, "alumnos", id));
       if (alumnoDoc.exists()) {
         const alumnoData = alumnoDoc.data();
         setNombre(alumnoData.nombre);
+        setApellido(alumnoData.apellido);
+        setDni(alumnoData.dni);
         setEdad(alumnoData.edad);
         setMateriasSeleccionadas(alumnoData.materias || []);
-        setMateriasAsignadas(alumnoData.materias || []);
       }
 
-      // Obtener todas las materias disponibles
       const querySnapshot = await getDocs(collection(db, "materias"));
       const materiasList = querySnapshot.docs.map(doc => ({
         id: doc.id,
@@ -43,19 +42,20 @@ const EditarAlumnoPage = () => {
     fetchData();
   }, [id]);
 
-  // Mostrar u ocultar el modal
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
 
-  // Manejar la inscripción o baja de materias
   const handleMateriaToggle = async (materiaId, isAdding) => {
     const materiaDocRef = doc(db, "materias", materiaId);
     const materiaDoc = await getDoc(materiaDocRef);
     const materiaData = materiaDoc.data();
 
     if (isAdding) {
-      // Inscribir al alumno si hay cupos disponibles
+      if (materiasSeleccionadas.length >= 8) {
+        alert("El alumno no puede inscribirse en más de 8 materias.");
+        return;
+      }
       if (materiaData.cupo > 0) {
         await updateDoc(materiaDocRef, { cupo: materiaData.cupo - 1 });
         setMateriasSeleccionadas([...materiasSeleccionadas, materiaId]);
@@ -63,25 +63,53 @@ const EditarAlumnoPage = () => {
         alert("No hay cupos disponibles para esta materia.");
       }
     } else {
-      // Dar de baja del alumno
+      if (materiasSeleccionadas.length <= 3) {
+        alert("El alumno debe estar inscrito en al menos 3 materias.");
+        return;
+      }
       await updateDoc(materiaDocRef, { cupo: materiaData.cupo + 1 });
       setMateriasSeleccionadas(materiasSeleccionadas.filter(id => id !== materiaId));
     }
   };
 
-  // Manejar el formulario de edición
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Actualizar los datos del alumno
+      if (materiasSeleccionadas.length < 3) {
+        alert("El alumno debe estar inscrito en al menos 3 materias para ser guardado.");
+        return;
+      }
       await updateDoc(doc(db, "alumnos", id), {
         nombre,
+        apellido,
+        dni,
         edad,
         materias: materiasSeleccionadas,
       });
       navigate("/alumnos");
     } catch (error) {
       console.error("Error al actualizar el alumno:", error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const alumnoDoc = await getDoc(doc(db, "alumnos", id));
+      if (alumnoDoc.exists()) {
+        const alumnoData = alumnoDoc.data();
+        
+        for (const materiaId of alumnoData.materias) {
+          const materiaDocRef = doc(db, "materias", materiaId);
+          const materiaDoc = await getDoc(materiaDocRef);
+          const materiaData = materiaDoc.data();
+          await updateDoc(materiaDocRef, { cupo: materiaData.cupo + 1 });
+        }
+      }
+
+      await deleteDoc(doc(db, "alumnos", id));
+      navigate("/alumnos");
+    } catch (error) {
+      console.error("Error al eliminar el alumno:", error);
     }
   };
 
@@ -96,6 +124,28 @@ const EditarAlumnoPage = () => {
             type="text"
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
+            required
+            className="w-full p-2 border border-gray-300 rounded mt-1"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Apellido</label>
+          <input
+            type="text"
+            value={apellido}
+            onChange={(e) => setApellido(e.target.value)}
+            required
+            className="w-full p-2 border border-gray-300 rounded mt-1"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">DNI</label>
+          <input
+            type="text"
+            value={dni}
+            onChange={(e) => setDni(e.target.value)}
             required
             className="w-full p-2 border border-gray-300 rounded mt-1"
           />
@@ -128,9 +178,15 @@ const EditarAlumnoPage = () => {
         >
           Actualizar Alumno
         </button>
+        <button
+          type="button"
+          onClick={handleDelete}
+          className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 w-full mt-4"
+        >
+          Eliminar Alumno
+        </button>
       </form>
 
-      {/* Modal de Materias */}
       {modalVisible && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">

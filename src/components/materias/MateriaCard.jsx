@@ -1,29 +1,17 @@
+// MateriaCard.js
 import React from "react";
 
 const MateriaCard = ({ materia, onEdit, onDelete }) => {
   return (
-    <div className="p-4 bg-white shadow-md rounded-md flex justify-between items-center">
-      {/* Contenido de la materia */}
-      <div>
-        <h3 className="text-lg font-semibold">{materia.nombre}</h3>
-        <p className="text-sm text-gray-500">{materia.descripcion}</p>
-      </div>
-
-      {/* Botones de acción: Editar y Eliminar */}
-      <div className="flex space-x-2">
-        {/* Botón para editar */}
-        <button
-          onClick={() => onEdit(materia)}  // Llama a la función onEdit cuando se hace clic
-          className="text-blue-500 hover:underline"
-        >
+    <div className="bg-white shadow-md rounded p-4">
+      <h2 className="text-xl font-bold mb-2">{materia.nombre}</h2>
+      <p>{materia.descripcion}</p>
+      <p>Cupo: {materia.cupo}</p>
+      <div className="mt-4 flex space-x-2">
+        <button onClick={onEdit} className="bg-green-500 text-white py-1 px-2 rounded hover:bg-green-600">
           Editar
         </button>
-
-        {/* Botón para eliminar */}
-        <button
-          onClick={() => onDelete(materia.id)}  // Llama a la función onDelete cuando se hace clic
-          className="text-red-500 hover:underline"
-        >
+        <button onClick={onDelete} className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">
           Eliminar
         </button>
       </div>
@@ -32,4 +20,3 @@ const MateriaCard = ({ materia, onEdit, onDelete }) => {
 };
 
 export default MateriaCard;
-

@@ -1,31 +1,57 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { getDocs, collection } from "firebase/firestore"; // Importa funciones de Firestore
-import { db } from "../config/firebaseConfig";  // Ajusta según la ubicación correcta
+import { Link, useNavigate } from "react-router-dom";
+import { getDocs, collection, deleteDoc, doc } from "firebase/firestore";
+import { db } from "../config/firebaseConfig";
 import MateriaCard from "../components/materias/MateriaCard";
-import { useNavigate } from "react-router-dom"; // Para navegar entre páginas
 
 const MateriasPage = () => {
   const [materias, setMaterias] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
   const navigate = useNavigate();
 
-  // Obtener las materias desde Firestore
   const fetchMaterias = async () => {
-    const querySnapshot = await getDocs(collection(db, "materias")); // Accede a la colección de "materias"
-    const materiasList = querySnapshot.docs.map(doc => ({
+    const querySnapshot = await getDocs(collection(db, "materias"));
+    const materiasList = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
-    setMaterias(materiasList); // Actualiza el estado con las materias obtenidas
+    setMaterias(materiasList);
+  };
+
+  // Función para eliminar una materia
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar esta materia?");
+    if (confirmDelete) {
+      try {
+        await deleteDoc(doc(db, "materias", id)); // Elimina la materia de Firestore
+        setMaterias(materias.filter((materia) => materia.id !== id)); // Actualiza el estado
+      } catch (error) {
+        console.error("Error al eliminar la materia:", error);
+      }
+    }
   };
 
   useEffect(() => {
-    fetchMaterias(); // Llama a la función cuando el componente se monta
-  }, []); // Solo se ejecuta una vez cuando el componente se monta
+    fetchMaterias();
+  }, []);
+
+  // Filtrar materias en función del término de búsqueda
+  const filteredMaterias = materias.filter((materia) =>
+    materia.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">Lista de Materias</h1>
+
+      {/* Campo de búsqueda */}
+      <input
+        type="text"
+        placeholder="Buscar materia por nombre"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="w-full mb-4 p-2 border border-gray-300 rounded"
+      />
 
       {/* Botón para agregar una nueva materia */}
       <Link
@@ -36,13 +62,12 @@ const MateriasPage = () => {
       </Link>
 
       <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {/* Mostrar las materias utilizando el componente MateriaCard */}
-        {materias.map((materia) => (
+        {filteredMaterias.map((materia) => (
           <MateriaCard
             key={materia.id}
             materia={materia}
-            onEdit={() => navigate(`/materias/editar/${materia.id}`)} // Redirige a la página de editar
-            onDelete={() => alert("Eliminar materia")} // Función de eliminación (puedes implementar la lógica)
+            onEdit={() => navigate(`/materias/editar/${materia.id}`)}
+            onDelete={() => handleDelete(materia.id)}
           />
         ))}
       </div>

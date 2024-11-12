@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage"; // Importa la página de inicio
 import CrearAlumnoPage from "./pages/CrearAlumnoPage"; // Asegúrate de importar el componente de crear alumno
 import CrearMateriaPage from "./pages/CrearMateriaPage"; // Asegúrate de importar la página para crear materia
 import EditarAlumnoPage from "./pages/EditarAlumnoPage"; // Asegúrate de importar la 
+import EditarMateriaPage from "./pages/EditarMateriaPage";
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/alumnos/editar/:id" element={<EditarAlumnoPage />} />
           <Route path="/materias" element={<MateriasPage />} /> {/* Página de materias */}
           <Route path="/materias/crear" element={<CrearMateriaPage />} /> {/* Ruta para el formulario de crear materia */}
+          <Route path="/materias/editar/:id" element={<EditarMateriaPage />} /> {/* Ruta para editar */}
         </Routes>
       </div>
     </Router>
